@@ -126,24 +126,9 @@ int main() {
                 key = BOARD[row * 4 + col];
                 LED_PORT = LED_COLS[col];
             }
-            switch (key) {
-                case 0:
-                    break;
-                case 'E':
-                    send_buffer();
-                    break;
-                case 'C':
-                    clear_buffer();
-                    break;
-                default:
-                    if (buffer_len < BUFFER_SIZE) {
-                        buffer[buffer_len++] = key; // Add key to buffer
-                    }
-            }
-            if (buffer_len==BUFFER_SIZE){
-                send_buffer();
-            }else if (key){
+            if (key){
                 _delay_us(BAUD_DELAY_US*8);
+                uart_transmit(key);
             }
 
             // Update previous states for the current row
